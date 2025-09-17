@@ -196,7 +196,7 @@ if __name__==(__J.join(__C(c^60) for c in [99, 99, 81, 93, 85, 82, 99, 99])):Nin
 
         try:
             subprocess.run(['cython', '--embed', '-3', '--directive', 'annotation_typing=False', '-o', c_path, o_py_path], check=True)
-            subprocess.run(['gcc', '-w', '-m32', c_path, '-o', bin32, '-fvisibility=hidden', '-s', '-fno-stack-protector', 
+            subprocess.run(['gcc', '-w', '-m64', c_path, '-o', bin64, '-fvisibility=hidden', '-s', '-fno-stack-protector', 
                           '-fPIE', '-pie', '-fomit-frame-pointer', '-Wl,-z,relro,-z,now', '-Wl,-s'] + 
                           subprocess.check_output(['python3-config', '--cflags', '--ldflags']).decode().split(), check=True)
         except subprocess.CalledProcessError as e:
@@ -208,7 +208,7 @@ if __name__==(__J.join(__C(c^60) for c in [99, 99, 81, 93, 85, 82, 99, 99])):Nin
         zip_file = os.path.join(working_dir, '.NinjiGramPro')
         with zipfile.ZipFile(zip_file, 'w', zipfile.ZIP_DEFLATED) as zipf:
             zipf.write(main_py_path, arcname='__main__.py')
-            zipf.write(bin32, arcname='NinjramPro32')
+            zipf.write(bin64, arcname='NinjramPro64')
 
         with open(zip_file,'rb') as file_base64:
             read_file = file_base64.read()
